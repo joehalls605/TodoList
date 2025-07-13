@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { TaskContext } from '../context/TaskContext';
+import FilterBar from '../components/FilterBar';
 
 const HomeScreen = ({ navigation }) => {
     const { tasks } = useContext(TaskContext);
@@ -10,27 +11,7 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* Filter Buttons */}
-            <View style={styles.filterContainer}>
-                {['All', 'Work', 'Personal'].map(category => (
-                    <TouchableOpacity
-                        key={category}
-                        onPress={() => setFilter(category)}
-                        style={[
-                            styles.filterButton,
-                            filter === category && styles.activeFilter
-                        ]}
-                    >
-                        <Text style={[
-                            styles.filterText,
-                            filter === category && styles.activeFilterText
-                        ]}>
-                            {category}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
-
+            <FilterBar currentFilter={filter} onFilterChange={setFilter}/>
             {/* Add Task Button */}
             <TouchableOpacity
                 style={styles.addButton}
@@ -60,25 +41,6 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-        backgroundColor: '#fff',
-    },
-    filterContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginBottom: 16,
-    },
-    filterButton: {
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        backgroundColor: '#eee',
-        borderRadius: 20,
-    },
-    activeFilter: {
-        backgroundColor: '#4CAF50',
-    },
     filterText: {
         color: '#333',
         fontWeight: 'bold',
